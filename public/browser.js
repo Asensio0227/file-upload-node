@@ -68,7 +68,7 @@ async function fetchProducts() {
     const productsDom = products.map((venom) => {
       return `
         <article class="product">
-          <img src="${venom.image}" alt="${venom.name}" class="img"/>
+<img src="${venom.image}" alt="${venom.name}" class="img"/>
           <footer>
             <p>
               ${venom.name}

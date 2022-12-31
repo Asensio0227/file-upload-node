@@ -4,28 +4,33 @@ const CustomError = require('../errors');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
-const productImageUpload = async (req, res) => { 
+const productImageUpload = async (req, res) => {
   if (!req.files) {
-    throw new CustomError.BadRequestError('No files were uploaded');
-  };
+    throw new CustomError.BadRequestError('No file uploaded')
+  }
 
-  const productPath = req.files.image;
-  if (!productPath.mimetype.startsWith('image')) {
+  const productImage = req.files.image;
+
+  if (!productImage.mimetype.startsWith('image')) {
     throw new CustomError.BadRequestError('Please upload image');
   }
 
   const maxSize = 1024 * 1024;
 
-  if (productPath.size > maxSize) {
-    throw new CustomError.BadRequestError('Please upload image smaller than 1mb');
+  if (productImage.size > maxSize) {
+    throw new CustomError.BadRequestError('please upload image smaller than 1MB');
   }
 
-  const imagePath = path.join(__dirname,'../public/uploads'+`${productPath.name}`);
+  const imagePath = path.join(
+    __dirname,
+    '../public/uploads/' + `${productImage.name}`
+  );
 
-  await productPath.mv(imagePath)
+  await productImage.mv(imagePath);
+
   return res.status(StatusCodes.OK).json({
     image: {
-      src:`uploads/${productPath.name}`
+      src: `/uploads/${productImage.name}`
     }
   })
 };

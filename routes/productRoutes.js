@@ -12,12 +12,11 @@ const {
 } = require('../controllers/uploadController');
 
 
-router.route('/')
-  .post(createProducts)
-  .get(getAllProducts)
+router.get('/', getAllProducts);
+router.post('/', createProducts);
 router.route('/uploads')
-.post(productImageUpload)
 .post(uploadProductImage)
+// .post(productImageUpload)
 
 
 module.exports = router;
